@@ -35,6 +35,7 @@ public class FacultyService {
     public Faculty deleteFaculty(long id) {
         return faculties.remove(id);
     }
+
     public Collection<Faculty> findByColor(String color) {
         ArrayList<Faculty> result = new ArrayList<>();
         for (Faculty faculty : faculties.values()) {
