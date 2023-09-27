@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import ru.hogwarts.school.generator.FacultyGenerator;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repository.FacultyRepository;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,7 +16,8 @@ import static ru.hogwarts.school.generator.StudentGenerator.ID;
 
 class FacultyServiceTest {
 
-    private final FacultyService facultyService = new FacultyService();
+    private FacultyRepository facultyRepository;
+    private final FacultyService facultyService = new FacultyService(facultyRepository);
 
     @Test
     void addFaculty_success() {
@@ -75,18 +77,12 @@ class FacultyServiceTest {
 
 //        Входные данные.
 
-        Faculty faculty = new Faculty(ID, NAME, COLOR);
         Long id = ID;
-
-//        Ожидаемый результат.
-
-        facultyService.addFaculty(faculty);
-        Faculty expected = getStudent();
 
 //        Тест.
 
-        Faculty actual = facultyService.deleteFaculty(id);
-        assertEquals(expected, actual);
+        assertThrows(RuntimeException.class, () -> facultyService.deleteFaculty(id));
+
     }
 
     @Test

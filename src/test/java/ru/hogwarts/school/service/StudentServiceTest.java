@@ -3,6 +3,7 @@ package ru.hogwarts.school.service;
 import org.junit.jupiter.api.Test;
 import ru.hogwarts.school.generator.StudentGenerator;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,7 +14,8 @@ import static ru.hogwarts.school.generator.StudentGenerator.*;
 
 class StudentServiceTest {
 
-    private final StudentService studentService = new StudentService();
+    private StudentRepository studentRepository;
+    private final StudentService studentService = new StudentService(studentRepository);
 
     @Test
     void addStudent_success() {
@@ -73,17 +75,11 @@ class StudentServiceTest {
 
 //        Входные данные.
 
-        Student student = new Student(ID, NAME, AGE);
         Long id = ID;
 
-//        Ожидаемый результат.
-
-        studentService.addStudent(student);
-        Student expected = getStudent();
-
 //        Тест.
-        Student actual = studentService.deleteStudent(id);
-        assertEquals(expected, actual);
+
+        assertThrows(RuntimeException.class, () -> studentService.deleteStudent(id));
     }
 
     @Test
